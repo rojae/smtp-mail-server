@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -45,7 +46,9 @@ public class MailSendService {
 
         // Update isAuth Column
         Optional<Mail> selectedMail = mailRepository.findById(mail.getId());
-        selectedMail.ifPresent(value -> value.setIsAuth('Y'));
+        selectedMail.ifPresent(value -> value.setSendDate(LocalDateTime.now()));
+
+        // needs :: api level's isAuth -> 'Y' updated process
     }
 
 
