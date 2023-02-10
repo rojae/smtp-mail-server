@@ -35,7 +35,7 @@ public class Mail {
     @Column(name = "secretKey", nullable = false)
     private String secretKey;
 
-    @Column(name = "sendDate", nullable = true, columnDefinition = "TIMESTAMP DEFAULT NULL")
+    @Column(name = "sendDate", nullable = true, columnDefinition = "TIMESTAMP NULL")
     private LocalDateTime sendDate;
 
     @Column(name = "regDate", nullable = false)
