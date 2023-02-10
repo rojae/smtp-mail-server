@@ -35,9 +35,12 @@ public class Mail {
     @Column(name = "secretKey", nullable = false)
     private String secretKey;
 
-    @Column(name = "sendDate", nullable = false)
-    @CreatedDate
+    @Column(name = "sendDate", nullable = true)
     private LocalDateTime sendDate;
+
+    @Column(name = "regDate", nullable = false)
+    @CreatedDate
+    private LocalDateTime regDate;
 
     @Column(name = "mailType", nullable = false, columnDefinition = "VARCHAR(20)", length = 20)
     @Enumerated(EnumType.STRING)

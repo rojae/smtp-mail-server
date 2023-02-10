@@ -1,21 +1,25 @@
 package io.github.rojae.smtp.service;
 
 import io.github.rojae.smtp.common.domain.Mail;
+import io.github.rojae.smtp.common.repository.MailRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class MailSendService {
     private final JavaMailSender mailSender;
+    private final MailRepository mailRepository;
 
     @Value("${web.location.signin}")
     public String signinUrl;
@@ -24,6 +28,7 @@ public class MailSendService {
     public String fromAddress;
 
 
+    @Transactional(readOnly = false)
     public void signupAuthMail(Mail mail) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
@@ -37,6 +42,10 @@ public class MailSendService {
         helper.setSubject("[Company] - 회원가입 인증메일입니다");
         helper.setFrom(fromAddress);
         mailSender.send(mimeMessage);
+
+        // Update isAuth Column
+        Optional<Mail> selectedMail = mailRepository.findById(mail.getId());
+        selectedMail.ifPresent(value -> value.setIsAuth('Y'));
     }
 
 
