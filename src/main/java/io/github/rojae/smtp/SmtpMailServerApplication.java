@@ -14,11 +14,6 @@ import java.util.TimeZone;
 @EnableScheduling
 public class SmtpMailServerApplication {
 
-    @PostConstruct
-    void started() {
-        TimeZone.setDefault(TimeZone.getTimeZone("KST"));
-    }
-
     public static void main(String[] args) {
         SpringApplication.run(SmtpMailServerApplication.class, args);
     }

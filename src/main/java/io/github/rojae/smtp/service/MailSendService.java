@@ -2,6 +2,7 @@ package io.github.rojae.smtp.service;
 
 import io.github.rojae.smtp.common.domain.Mail;
 import io.github.rojae.smtp.common.repository.MailRepository;
+import io.github.rojae.smtp.common.utils.KstUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,10 +34,10 @@ public class MailSendService {
     public void signupAuthMail(Mail mail) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-
+        LocalDateTime kstTime = KstUtils.toKST(mail.getExpireDate());
         String htmlMsg
                 = "인증코드 : " + mail.getSecretKey() + "<br/>" +
-                  "만료일자 : " + mail.getExpireDate().getYear() + "년 " + mail.getExpireDate().getMonthValue() + "월 " + mail.getExpireDate().getDayOfMonth() + "일 " + mail.getExpireDate().getHour() + "시 " + mail.getExpireDate().getMinute() + "분 " + mail.getExpireDate().getSecond() + "초 <br/>";
+                  "만료일자 : " + kstTime.getYear() + "년 " + kstTime.getMonthValue() + "월 " + kstTime.getDayOfMonth() + "일 " + kstTime.getHour() + "시 " + kstTime.getMinute() + "분 " + kstTime.getSecond() + "초 <br/>";
 
         helper.setText(htmlMsg, true); // Use this or above line.
         helper.setTo(mail.getEmail());
