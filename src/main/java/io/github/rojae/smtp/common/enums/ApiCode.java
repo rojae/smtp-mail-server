@@ -2,10 +2,11 @@ package io.github.rojae.smtp.common.enums;
 
 public enum ApiCode {
 
-    OK("M0000", "성공"),
+    STMP_OK("M0000", "성공"),
 
     // API Level //
-    INVALID_HEADER("M0001", "메일 발송에 실패했습니다"),
+    FAIL_SENDMAIL("M0001", "메일 발송에 실패했습니다"),
+    INVALID_SECRET("M0002", "잘못된 인증코드입니다"),
 
     // UNKNOWN //
     UNKNOWN("UNKNOWN", "알 수 없음");

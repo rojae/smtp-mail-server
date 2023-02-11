@@ -21,12 +21,12 @@ public class SendController {
     @PostMapping("/api/v1/mail/send/signupForAuth")
     public ResponseEntity<ApiBase<Object>> sendAuthMail(@RequestBody MailRequestDto requestDto){
         mailQueueService.insertNew(requestDto);
-        return ResponseEntity.ok(new ApiBase<>(ApiCode.OK));
+        return ResponseEntity.ok(new ApiBase<>(ApiCode.STMP_OK));
     }
 
     @PostMapping("/api/v1/mail/send/signupDone")
     public ResponseEntity<ApiBase<Object>> sendWelcomeMail(){
-        return ResponseEntity.ok(new ApiBase<>(ApiCode.OK));
+        return ResponseEntity.ok(new ApiBase<>(ApiCode.STMP_OK));
     }
 
 
