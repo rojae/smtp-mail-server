@@ -26,13 +26,13 @@ public class Mail {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "isAuth", nullable = false, columnDefinition = "CHAR(1) DEFAULT 'N'", length = 1)
+    @Column(name = "isAuth", nullable = true, columnDefinition = "CHAR(1) DEFAULT 'N'", length = 1)
     private char isAuth = 'N';
 
-    @Column(name = "expireDate", nullable = false)
+    @Column(name = "expireDate", nullable = true)
     private LocalDateTime expireDate;
 
-    @Column(name = "secretKey", nullable = false)
+    @Column(name = "secretKey", nullable = true)
     private String secretKey;
 
     @Column(name = "sendDate", nullable = true, columnDefinition = "TIMESTAMP NULL")

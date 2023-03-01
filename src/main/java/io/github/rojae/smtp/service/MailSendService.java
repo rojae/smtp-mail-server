@@ -45,14 +45,14 @@ public class MailSendService {
         helper.setFrom(fromAddress);
         mailSender.send(mimeMessage);
 
-        // Update isAuth Column
+        // Update sendDate Column
         Optional<Mail> selectedMail = mailRepository.findById(mail.getId());
         selectedMail.ifPresent(value -> value.setSendDate(LocalDateTime.now()));
 
-        // needs :: api level's isAuth -> 'Y' updated process
     }
 
 
+    @Transactional(readOnly = false)
     public void welcomeMail(Mail mail) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
@@ -65,5 +65,9 @@ public class MailSendService {
         helper.setSubject("[Company] - 가입완료 메일입니다");
         helper.setFrom(fromAddress);
         mailSender.send(mimeMessage);
+
+        // Update sendDate Column
+        Optional<Mail> selectedMail = mailRepository.findById(mail.getId());
+        selectedMail.ifPresent(value -> value.setSendDate(LocalDateTime.now()));
     }
 }

@@ -9,19 +9,18 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class SignupScheduler {
+public class MailScheduler {
 
     private final MailSendService mailSendService;
     private final MailQueueService mailQueueService;
 
     @Scheduled(cron = "*/10 * * * * *") // 매 분마다 실행
     public void scheduleSignupTask() {
-        List<Mail> top30 = mailQueueService.getTop30();
+        var top30 = mailQueueService.getTop30Signup();
 
         for(Mail m : top30){
             try {
@@ -34,6 +33,23 @@ public class SignupScheduler {
         }
 
         log.debug("schedule signup mail task's sent - {}", top30.size());
+    }
+
+    @Scheduled(cron = "*/10 * * * * *") // 매 분마다 실행
+    public void scheduleWelcomeTask() {
+        var top30 = mailQueueService.getTop30Welcome();
+
+        for(Mail m : top30){
+            try {
+                mailSendService.welcomeMail(m);
+                Thread.sleep(10);
+            }
+            catch (InterruptedException | MessagingException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        log.debug("schedule welcome mail task's sent - {}", top30.size());
     }
 
 }

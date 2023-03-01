@@ -24,8 +24,9 @@ public class SendController {
         return ResponseEntity.ok(new ApiBase<>(ApiCode.STMP_OK));
     }
 
-    @PostMapping("/api/v1/mail/send/signupDone")
-    public ResponseEntity<ApiBase<Object>> sendWelcomeMail(){
+    @PostMapping("/api/v1/mail/send/signupForWelcome")
+    public ResponseEntity<ApiBase<Object>> sendWelcomeMail(@RequestBody MailRequestDto requestDto){
+        mailQueueService.insertNew(requestDto);
         return ResponseEntity.ok(new ApiBase<>(ApiCode.STMP_OK));
     }
 

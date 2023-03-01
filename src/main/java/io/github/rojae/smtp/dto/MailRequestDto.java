@@ -1,6 +1,5 @@
 package io.github.rojae.smtp.dto;
 
-import io.github.rojae.smtp.common.enums.MailType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
