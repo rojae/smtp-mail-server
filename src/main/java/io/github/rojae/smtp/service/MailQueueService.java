@@ -33,7 +33,7 @@ public class MailQueueService {
             newMail.setMailType(MailType.valueOf(requestDto.getMailType()));
 
             // 기존 보낸 메일이 있다면, disable 처리
-            mailRepository.updateToDisable(requestDto.getEmail(), requestDto.getMailType());
+            mailRepository.updateToDisable(requestDto.getEmail(), MailType.valueOf(requestDto.getMailType()));
         }
         else if(requestDto.getMailType().equals(MailType.WELCOME.name())) {
             newMail.setEmail(requestDto.getEmail());

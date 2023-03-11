@@ -21,6 +21,6 @@ public interface MailRepository extends JpaRepository<Mail, Long> {
 
         @Modifying
         @Query("UPDATE TBL_MAIL_REQ m SET m.isEnable = 'N' WHERE m.email = :email AND m.mailType = :mailType")
-        void updateToDisable(String email, String mailType);
+        void updateToDisable(String email, MailType mailType);
 
 }
