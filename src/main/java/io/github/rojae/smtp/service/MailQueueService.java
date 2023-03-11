@@ -31,18 +31,22 @@ public class MailQueueService {
             newMail.setExpireDate(LocalDateTime.now().plusMinutes(expireMin));
             newMail.setEmail(requestDto.getEmail());
             newMail.setMailType(MailType.valueOf(requestDto.getMailType()));
+
+            // 기존 보낸 메일이 있다면, disable 처리
+            mailRepository.updateToDisable(requestDto.getEmail(), requestDto.getMailType());
         }
         else if(requestDto.getMailType().equals(MailType.WELCOME.name())) {
             newMail.setEmail(requestDto.getEmail());
             newMail.setMailType(MailType.valueOf(requestDto.getMailType()));
         }
 
+        // 메일 요청 테이블에 저장
         mailRepository.save(newMail);
     }
 
     public List<Mail> getTop30Signup(){
         // 회원가입 메일이며, 전송하지 않았고, 인증하지 않았으며, 만료일지 현재시간보다 미래인 경우
-        return mailRepository.findTop30ByMailTypeAndSendDateAndIsAuthAndExpireDateAfterOrderByExpireDateAsc(MailType.SIGNUP, null, 'N', LocalDateTime.now());
+        return mailRepository.findTop30ByMailTypeAndSendDateAndIsAuthAndIsEnableAndExpireDateAfterOrderByExpireDateAsc(MailType.SIGNUP, null, 'N', 'Y', LocalDateTime.now());
     }
 
     public List<Mail> getTop30Welcome() {

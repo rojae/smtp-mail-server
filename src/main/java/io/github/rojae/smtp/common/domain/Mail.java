@@ -31,7 +31,6 @@ public class Mail {
 
     @Column(name = "expireDate", nullable = true)
     private LocalDateTime expireDate;
-
     @Column(name = "secretKey", nullable = true)
     private String secretKey;
 
@@ -46,4 +45,6 @@ public class Mail {
     @Enumerated(EnumType.STRING)
     private MailType mailType;
 
+    @Column(name = "isEnable", nullable = false, columnDefinition = "CHAR(1) DEFAULT 'N'", length = 1)
+    private char isEnable = 'Y';
 }
