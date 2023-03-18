@@ -27,7 +27,7 @@ public class MailQueueService {
         Mail newMail = new Mail();
 
         if(requestDto.getMailType().equals(MailType.SIGNUP.name())){
-            newMail.setSecretKey(RandomStringUtils.randomAlphabetic(keyLen));
+            newMail.setSecretKey(RandomStringUtils.randomNumeric(keyLen));
             newMail.setExpireDate(LocalDateTime.now().plusMinutes(expireMin));
             newMail.setEmail(requestDto.getEmail());
             newMail.setMailType(MailType.valueOf(requestDto.getMailType()));
